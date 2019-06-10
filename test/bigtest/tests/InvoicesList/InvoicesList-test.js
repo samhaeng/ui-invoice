@@ -3,6 +3,7 @@ import { expect } from 'chai';
 
 import setupApplication from '../../helpers/setup-application';
 import InvoicesListInteractor from '../../interactors/InvoicesList';
+import InvoiceEdit from '../../interactors/InvoiceEdit';
 
 const INVOICES_COUNT = 15;
 
@@ -31,6 +32,19 @@ describe('Invoices list', () => {
   });
 
   it('displays create the new invoice button', () => {
-    expect(invoicesList.hasCreateButton).to.be.true;
+    expect(invoicesList.newInvoiceButton.isPresent).to.be.true;
+  });
+
+  describe('Create new invoice', () => {
+    const invoiceEdit = new InvoiceEdit();
+
+    beforeEach(async function () {
+      await invoicesList.newInvoiceButton.click();
+      await invoiceEdit.whenLoaded();
+    });
+
+    it('displays create invoice form', () => {
+      expect(invoiceEdit.isVisible).to.be.true;
+    });
   });
 });

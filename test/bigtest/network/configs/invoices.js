@@ -5,6 +5,8 @@ const configInvoices = server => {
     return schema.invoices.all();
   });
 
+  server.post(INVOICE_API, () => null);
+
   server.get(`${INVOICE_API}/:id`, (schema, request) => {
     return schema.invoices.find(request.params.id).attrs;
   });
